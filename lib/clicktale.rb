@@ -1,6 +1,7 @@
 require 'activesupport'
-require 'astrails/clicktale/controller'
-require 'astrails/clicktale/helper'
+require 'clicktale/controller'
+require 'clicktale/helper'
+require 'clicktale/routing'
 
 module Astrails
   module Clicktale

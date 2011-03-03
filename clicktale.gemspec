@@ -11,13 +11,14 @@ Gem::Specification.new do |s|
   s.email = %q{michael@astrails.com}
   s.executables = ["clicktaleize"]
   s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
-  s.files = ["README.rdoc", "VERSION.yml", "WRb.js", "bin/clicktaleize", "app/views", "app/views/clicktale", "app/views/clicktale/_bottom.html.erb", "app/views/clicktale/_top.html.erb", "lib/astrails", "lib/astrails/clicktale", "lib/astrails/clicktale/controller.rb", "lib/astrails/clicktale/helper.rb", "lib/astrails/clicktale.rb", "config/clicktale.yml", "Rakefile", "LICENSE"]
+  # s.files = ["README.rdoc", "VERSION.yml", "WRb.js", "bin/clicktaleize", "app/controllers", "app/controllers/clicktales_controller.rb", "app/views", "app/views/clicktale", "app/views/clicktale/_bottom.html.erb", "app/views/clicktale/_top.html.erb", "lib", "lib/clicktale", "lib/clicktale/controller.rb", "lib/clicktale/helper.rb", "lib/clicktale/routing.rb", "lib/clicktale.rb", "lib/generators", "lib/generators/clicktale", "lib/generators/clicktale/config", "config/clicktale.yml", "Rakefile", "LICENSE"]
+  # s.files = Dir.glob('lib/**/*.(rb|erb|yml)')
   s.has_rdoc = true
   s.homepage = %q{http://github.com/astrails/clicktale}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.1}
-  s.summary = %q{TODO}
+  s.summary = %q{Provide acccess to clicktale to protected html content by stashing it in the cache for download later.}
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
