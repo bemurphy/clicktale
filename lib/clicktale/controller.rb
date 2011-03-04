@@ -24,15 +24,15 @@ module Clicktale
     end
 
     def clicktaleize
-      page = yield
+      yield
       if clicktale_enabled?
         begin
-          Rails.cache.write(clickable_cache_token, page, :expires_in => 5.minutes)
-        rescue # Nothing here should take us down
-          logger.error("cache failed, returning yielded data and skipping cache")
+          # TODO push expiration off into config
+          Rails.cache.write(clicktale_cache_token, response.body, cache_write_options)
+        rescue => e # Analytics should never take you down.
+          logger.error("cache failed, returning yielded data and skipping cache: #{e}")
         end
       end
-      page
     end
 
     def clicktale_enabled?
@@ -40,22 +40,26 @@ module Clicktale
     end
 
     def clicktale_config
-      @clicktale_config ||= Astrails::Clicktale::CONFIG.merge(@@clicktale_options || {}).merge(@clicktale_options || {})
+      @clicktale_config ||= Clicktale::CONFIG.merge(@@clicktale_options || {}).merge(@clicktale_options || {})
     end
-
+    
     protected
+    
 
-    def clicktale_cache_token(extra = "")
-      @clicktale_cache_token ||= Digest::SHA1.hexdigest(Time.now.to_s.split(//).sort_by {rand}.join + extra)
+    def clicktale_cache_token
+      @clicktale_cache_token ||= ActiveSupport::SecureRandom.hex(32)
     end
 
     def clicktale_path
-      @clicktale_path ||= "/clicktale/#{clicktale_cache_token}.html"
+      @clicktale_path ||= "/clicktales/#{clicktale_cache_token}"
     end
 
     def clicktale_url
       @clicktale_url ||= "#{request.protocol}#{request.host_with_port}#{clicktale_path}"
-    end
+    end    
 
+    def cache_write_options
+      clicktale_config[:expires_in] ? { :expires_in => clicktale_config[:expires_in].to_i } : {}
+    end
   end
 end
