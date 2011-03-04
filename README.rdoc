@@ -9,7 +9,7 @@ Clicktale records user sessions, clicks, form input etc and plays them back late
 
 * install the plugin
 
-    ./script/plugin install https://github.com/bemurphy/clicktale
+    ./script/plugin install git://github.com/bemurphy/clicktale.git
 
 * Run the generator to install clicktale.  You have the choice of serving clicktales from rack middleware (clicktale_using_middleware), or an in app rails controller (clicktale_using_controller).
 

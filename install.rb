@@ -1,3 +1,10 @@
-require 'fileutils'
+puts <<EOF
+Read the README before using
 
-system '/usr/bin/env', 'ruby', File.join(File.dirname(__FILE__), "bin/clicktaleize"), RAILS_ROOT
+To install using a clicktales controller:
+script/generate clicktale_using_controller
+
+To install using a clicktales middleware:
+script/generate clicktale_using_middleware
+EOF
+ 
