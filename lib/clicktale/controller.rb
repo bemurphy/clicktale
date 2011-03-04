@@ -27,7 +27,6 @@ module Clicktale
       yield
       if clicktale_enabled?
         begin
-          # TODO push expiration off into config
           Rails.cache.write(clicktale_cache_token, response.body, cache_write_options)
         rescue => e # Analytics should never take you down.
           logger.error("cache failed, returning yielded data and skipping cache: #{e}")
@@ -44,7 +43,6 @@ module Clicktale
     end
     
     protected
-    
 
     def clicktale_cache_token
       @clicktale_cache_token ||= ActiveSupport::SecureRandom.hex(32)
