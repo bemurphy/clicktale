@@ -48,13 +48,14 @@ module Clicktale
       @clicktale_cache_token ||= ActiveSupport::SecureRandom.hex(32)
     end
 
+    def clicktale_url
+      @clicktale_url ||= "#{request.protocol}#{request.host_with_port}#{clicktale_path}"
+    end    
+
     def clicktale_path
       @clicktale_path ||= "/clicktales/#{clicktale_cache_token}"
     end
 
-    def clicktale_url
-      @clicktale_url ||= "#{request.protocol}#{request.host_with_port}#{clicktale_path}"
-    end    
 
     def cache_write_options
       clicktale_config[:expires_in] ? { :expires_in => clicktale_config[:expires_in].to_i } : {}
