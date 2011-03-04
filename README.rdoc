@@ -9,7 +9,13 @@ Clicktale records user sessions, clicks, form input etc and plays them back late
 
 * install the plugin
 
-> ./script/plugin install git://github.com/astrails/clicktale.git
+    ./script/plugin install https://github.com/bemurphy/clicktale
+
+* Run the generator to install clicktale.  You have the choice of serving clicktales from rack middleware (clicktale_using_middleware), or an in app rails controller (clicktale_using_controller).
+
+* If you opted to use rack middleware, make sure to configure it after you memory store is configured, and pass it in as the cache store.  The middleware sends all urls for "/clicktales/:id" to the middleware, serving the content from cache.
+    
+    config.middleware.use "ClicktaleFromCache", config.cache_store
 
 * head to http://clicktale.net and signup for a free account. Or not free. Your choice.
 
@@ -39,8 +45,8 @@ Clicktale records user sessions, clicks, form input etc and plays them back late
 Note: The plugin works by leveraging rails caching mechanism, which is by default only enabled in
 production environment. To enable the plugin in the development environment do the following:
 
-	* set enabled=true in config/clicktale.yml (development section)
-	* set config.action_controller.perform_caching=true in config/environments/development.rb
+    set enabled=true in config/clicktale.yml (development section)
+    set config.action_controller.perform_caching=true in config/environments/development.rb
 
 Another Note: As of this writing, clicktale service ignores existance of Safari browser. I hope it will someday.
 
