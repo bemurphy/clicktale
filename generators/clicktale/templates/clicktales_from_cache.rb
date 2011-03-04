@@ -15,7 +15,7 @@ class ClicktalesFromCache
         cache.delete(clicktale_id)
         [200, { 'Content-Type' => "text/html;" }, cached_page]
       else
-        [404, { 'Content-Type' => "text/text;" }, ["Can't find that id\n"]]
+        [404, { 'Content-Type' => "text/plain;" }, ["Can't find that id\n"]]
       end
     else
       app.call(env)
