@@ -10,7 +10,7 @@ production:
 
 development:
   <<: *default
-  enabled: true
+  enabled: false
   
 test:
   <<: *default
