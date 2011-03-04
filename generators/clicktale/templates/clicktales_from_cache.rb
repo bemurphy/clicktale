@@ -25,7 +25,7 @@ class ClicktalesFromCache
   protected
   
   def clicktales_request?
-    @request_uri.index(BASE_PATH) == 0
+    @request_uri && @request_uri.index(BASE_PATH) == 0
   end
   
   def clicktale_id
