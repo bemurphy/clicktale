@@ -106,15 +106,6 @@ describe "Clicktale helper methods" do
       end
     end
     
-    # render :partial => "clicktale/bottom", :localss => {
-    #   :project_id => clicktale_config[:project_id],
-    #   :path => clicktale_url,
-    #   :ratio => clicktale_config[:ratio] || 1,
-    #   :tag => clicktale_config[:tag],
-    #   :param => clicktale_config[:param]
-    # }
-    
-    
     context "when rendering is enabled" do
       before(:each) do
         @object_with_helper.stub!(:clicktale_enabled?).and_return(true)
