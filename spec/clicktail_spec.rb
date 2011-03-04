@@ -78,6 +78,69 @@ describe "Clicktale controller methods", :type => :controller do
 end
 
 describe "Clicktale helper methods" do
+  before(:each) do
+    @object_with_helper = Object.new
+    @object_with_helper.extend(Clicktale::Helper)
+  end
+  
+  describe "#clicktale_top" do
+    it "should not render the partial if not clicktale enabled" do
+      @object_with_helper.stub!(:clicktale_enabled?).and_return(false)
+      @object_with_helper.should_not_receive(:render)
+      @object_with_helper.clicktale_top
+    end
+    
+    it "should render the clicktail/top partial if clicktale is enabled" do
+      @object_with_helper.stub!(:clicktale_enabled?).and_return(true)
+      @object_with_helper.should_receive(:render).with(:partial => "clicktale/top")
+      @object_with_helper.clicktale_top
+    end
+  end
+  
+  describe "#clicktale_bottom" do
+    context "when rendering is not enabled" do
+      it "should not render the partial" do
+        @object_with_helper.stub!(:clicktale_enabled?).and_return(false)
+        @object_with_helper.should_not_receive(:render)
+        @object_with_helper.clicktale_bottom
+      end
+    end
+    
+    # render :partial => "clicktale/bottom", :localss => {
+    #   :project_id => clicktale_config[:project_id],
+    #   :path => clicktale_url,
+    #   :ratio => clicktale_config[:ratio] || 1,
+    #   :tag => clicktale_config[:tag],
+    #   :param => clicktale_config[:param]
+    # }
+    
+    
+    context "when rendering is enabled" do
+      before(:each) do
+        @object_with_helper.stub!(:clicktale_enabled?).and_return(true)
+        @object_with_helper.stub(:clicktale_config).and_return({
+          :project_id => 42,
+          :ratio  => 50,
+          :tag => "spec_tag",
+          :param => "spec_param"
+        })
+        @object_with_helper.stub(:clicktale_url).and_return("http://test.host/clicktale_spec_url")
+      end
+      
+      it "should render the clicktail/bottom partial" do
+        @object_with_helper.should_receive(:render).with(hash_including(:partial => "clicktale/bottom"))
+        @object_with_helper.clicktale_bottom
+      end
+      
+      it "should render the partial with the expected locals" do
+        expected_locals =
+          { :path=>"http://test.host/clicktale_spec_url", :tag => "spec_tag", :project_id => 42, :ratio => 50, :param => "spec_param" }
+          
+        @object_with_helper.should_receive(:render).with(hash_including(:locals => expected_locals))
+        @object_with_helper.clicktale_bottom
+      end
+    end
+  end
 end
 
 describe "Clicktale routing" do
