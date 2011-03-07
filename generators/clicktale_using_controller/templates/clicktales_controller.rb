@@ -18,7 +18,7 @@ class ClicktalesController < ApplicationController
   protected
   
   def require_clicktale_user_agent
-    if Rails.env.production? && request.env["HTTP_USER_AGENT"] !~ /clickbot/i
+    if Rails.env.production? && request.env["HTTP_USER_AGENT"] !~ /ClickTale bot/i
       render :text => "Sorry, you're not authorized to view this page", :status => 403
     end
   end
